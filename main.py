@@ -1,10 +1,21 @@
 # Card Game (War)
 import random
 
-# Card Class
+
+# Player Class
 
 
-class card():
+class Player:
+    # Initialize Constructor Method (player)
+    def __init__(self, name):
+        self.name = name
+        self.cards = []
+        self.wins = 0
+
+    # Card Class
+
+
+class Card:
     # Initialize Constructor Method (card)
     def __init__(self, suit, value):
         self.suit = suit
@@ -14,10 +25,10 @@ class card():
     def show_card(self):
         print('{} of {}'.format(self.suit, self.value))
 
-# Deck Class
+# deck Class
 
 
-class deck():
+class Deck:
     # Initialize Constructor Method (deck)
     def __init__(self):
         self.cards = []
@@ -27,23 +38,19 @@ class deck():
     def build_deck(self):
         for s in ["Clubs", "Diamonds", "Hearts", "Spades"]:
             for v in range(1, 14):
-                self.cards.append(card(s, v))
+                self.cards.append(Card(s, v))
 
-# Player Class
+    def shuffle_deck(self):
+        random.shuffle(self.cards)
 
-
-class player():
-    # Initialize Constructor Method (player)
-    def __init__(self, name):
-        self.name = name
-        self.cards = []
-        self.wins = 0
-
-    def draw(self):
-        return random.choice(self.cards)
+# Game Class
 
 
-class game():
-    deck = deck()
-    # Define Constructor Method (game)
-    def __init__(self):
+class Game:
+    # Initialize Constructor Method (game)
+    def __init__(self, player1, player2):
+        self.player1 = player1
+        self.player2 = player2
+
+
+print('check')
