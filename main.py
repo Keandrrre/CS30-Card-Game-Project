@@ -2,7 +2,6 @@
 import random
 import os
 import time
-import keyboard
 
 
 # Player Class
@@ -14,6 +13,10 @@ class Player:
         self.name = name
         self.cards = []
         self.wins = 0
+
+    # Methods (player)
+    def draw_card(self):
+        return random.choice(self.cards)
 
     # Card Class
 
@@ -36,6 +39,7 @@ class Deck:
     def __init__(self):
         self.cards = []
         self.build_deck()
+        self.shuffle_deck()
 
     # Methods (deck)
     def build_deck(self):
@@ -45,6 +49,7 @@ class Deck:
 
     def shuffle_deck(self):
         random.shuffle(self.cards)
+        print('Cards Have Been Shuffled.')
 
 
 # Game Class
@@ -52,30 +57,19 @@ class Deck:
 
 class Game:
     # Initialize Constructor Method (game)
-    def __init__(self, player1, player2):
-        self.deck = Deck
-        self.player1 = player1
-        self.player2 = player2
-
-    # Methods (game)
-    def deal_cards(self):
-        self.deck.shuffle_deck
-        print('Dealing Cards')
-
-
-while True:
-    # Main Menu
-    os.system('cls')
-    print("WAR\n\nOptions:\n1 -- 'Start New Game'\n2 -- 'Rules'")
-    if keyboard.is_pressed('1'):
-        os.system('cls')
-        # Enter Player Names
+    def __init__(self):
         p1_name = str(input("Enter Player 1 Name: "))
         p2_name = str(input("Enter Player 2 Name: "))
+        self.deck = Deck()
+        self.player1 = Player(p2_name)
+        self.player2 = Player(p1_name)
+
+    # Methods (game)
+    def start_game(self):
         os.system('cls')
-        p1 = Player(p1_name)
-        p2 = Player(p2_name)
-        # Game Starts
         print('Starting War!')
-        new_game = Game(p1, p2)
-        new_game.deal_cards
+        while self.player1.cards > 0 or self.player2.cards > 0:
+            p1_card = self.player1.draw_card()
+            p2_card = self.player2.draw_card()
+            p1_name = self.player1.name
+            p2_name = self.player2.name
