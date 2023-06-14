@@ -29,9 +29,9 @@ class Card:
 
     # Methods (card)
     def show_card(self):
-        print('{} of {}'.format(self.suit, self.value))
+        return '{} of {}'.format(self.suit, self.value)
 
-# deck Class
+# Deck Class
 
 
 class Deck:
@@ -48,8 +48,11 @@ class Deck:
                 self.cards.append(Card(s, v))
 
     def shuffle_deck(self):
+        os.system('cls')
         random.shuffle(self.cards)
-        print('Cards Have Been Shuffled.')
+        print('Shuffling Cards...')
+        time.sleep(2)
+        os.system('cls')
 
 
 # Game Class
@@ -60,16 +63,28 @@ class Game:
     def __init__(self):
         p1_name = str(input("Enter Player 1 Name: "))
         p2_name = str(input("Enter Player 2 Name: "))
-        self.deck = Deck()
+        self.deck = []
+        self.build_deck()
         self.player1 = Player(p2_name)
         self.player2 = Player(p1_name)
 
+    def build_deck(self):
+        for s in ["Clubs", "Diamonds", "Hearts", "Spades"]:
+            for v in range(1, 14):
+                self.deck.append(Card(s, v))
+
     # Methods (game)
+    def deal_cards(self):
+        pass
+
     def start_game(self):
         os.system('cls')
-        print('Starting War!')
-        while self.player1.cards > 0 or self.player2.cards > 0:
-            p1_card = self.player1.draw_card()
-            p2_card = self.player2.draw_card()
-            p1_name = self.player1.name
-            p2_name = self.player2.name
+        print('Starting War!\n\n' + self.player1.name +
+              " Vs. " + self.player2.name)
+        time.sleep(3)
+        os.system('cls')
+        # while len(self.player1.cards) > 0 or len(self.player2.cards) > 0:
+
+
+game = Game()
+game.start_game()
