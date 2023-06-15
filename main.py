@@ -11,12 +11,16 @@ class Player:
     # Initialize Constructor Method (player)
     def __init__(self, name):
         self.name = name
+        self.hand = []
         self.cards = []
-        self.wins = 0
 
     # Methods (player)
     def draw_card(self):
-        return random.choice(self.cards)
+        return random.choice(self.hand)
+
+    def show_hand(self):
+        for c in self.hand:
+            c.show_card()
 
     # Card Class
 
@@ -29,7 +33,7 @@ class Card:
 
     # Methods (card)
     def show_card(self):
-        return '{} of {}'.format(self.suit, self.value)
+        print('{} of {}'.format(self.suit, self.value))
 
 # Deck Class
 
@@ -45,46 +49,37 @@ class Deck:
     def build_deck(self):
         for s in ["Clubs", "Diamonds", "Hearts", "Spades"]:
             for v in range(1, 14):
-                self.cards.append(Card(s, v))
+                self.cards.append(Card(v, s))
 
     def shuffle_deck(self):
-        os.system('cls')
         random.shuffle(self.cards)
-        print('Shuffling Cards...')
-        time.sleep(2)
-        os.system('cls')
 
-
-# Game Class
-
-
-class Game:
-    # Initialize Constructor Method (game)
-    def __init__(self):
-        p1_name = str(input("Enter Player 1 Name: "))
-        p2_name = str(input("Enter Player 2 Name: "))
-        self.deck = []
-        self.build_deck()
-        self.player1 = Player(p2_name)
-        self.player2 = Player(p1_name)
-
-    def build_deck(self):
-        for s in ["Clubs", "Diamonds", "Hearts", "Spades"]:
-            for v in range(1, 14):
-                self.deck.append(Card(s, v))
-
-    # Methods (game)
-    def deal_cards(self):
-        pass
-
-    def start_game(self):
-        os.system('cls')
-        print('Starting War!\n\n' + self.player1.name +
-              " Vs. " + self.player2.name)
+    def show_deck(self):
+        for c in self.cards:
+            c.show_card()
         time.sleep(3)
         os.system('cls')
-        # while len(self.player1.cards) > 0 or len(self.player2.cards) > 0:
+
+# New Game Class
 
 
-game = Game()
-game.start_game()
+class New_Game:
+    def __init__(self):
+        self.p1 = Player(str(input("Player 1 Name:")))
+        self.p2 = Player(str(input("Player 2 Name:")))
+        self.deck = Deck()
+
+    def deal_cards(self):
+        while len(self.deck.cards) > 26:
+            self.p1.hand.append(self.deck.cards[0])
+            self.deck.cards.pop(0)
+        while len(self.deck.cards) > 0:
+            self.p2.hand.append(self.deck.cards[0])
+            self.deck.cards.pop(0)
+
+    def players_draw(self):
+        pass
+
+
+game = New_Game()
+game.deal_cards()
